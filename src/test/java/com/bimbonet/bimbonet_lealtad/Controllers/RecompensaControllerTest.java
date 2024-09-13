@@ -11,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -39,7 +41,7 @@ class RecompensaControllerTest {
         recompensa.setId(1L);
         recompensa.setNombre("Recompensa Test");
 
-        when(recompensaRepository.getById(anyLong())).thenReturn(recompensa);
+        when(recompensaRepository.findById(anyLong())).thenReturn(Optional.of(recompensa));
 
         // Actuar
         ResponseEntity<Recompensa> response = recompensaController.getRecompensa(1L);
@@ -59,7 +61,7 @@ class RecompensaControllerTest {
         when(recompensaService.registrarRecompensa(any(Recompensa.class))).thenReturn(recompensa);
 
         // Actuar
-        ResponseEntity<Recompensa> response = recompensaController.registrarPunto(recompensa);
+        ResponseEntity<Recompensa> response = recompensaController.registrarRecompensa(recompensa);
 
         // Afirmar
         assertEquals(HttpStatus.OK, response.getStatusCode());

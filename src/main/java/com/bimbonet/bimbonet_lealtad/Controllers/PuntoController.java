@@ -21,7 +21,7 @@ public class PuntoController {
 
     @Autowired
     private PuntoService puntoService;
-    private RecompensaService recompensaService;
+
     @Autowired
     private RecompensaRepository recompensaRepository;
 

@@ -1,79 +1,74 @@
 package com.bimbonet.bimbonet_lealtad.Generics;
 
 import com.bimbonet.bimbonet_lealtad.Services.Security.CustomUserDetailsService;
-import com.bimbonet.bimbonet_lealtad.Services.Security.JwtProvider;
+import com.bimbonet.bimbonet_lealtad.Services.Security.JwtAuthenticationFilter;
+import com.bimbonet.bimbonet_lealtad.Services.Security.JwtProvider; // Asegúrate de tener este import
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-public class SecurityConfig extends OncePerRequestFilter {
+public class SecurityConfig {
 
-    private final JwtProvider jwtProvider;
     private final CustomUserDetailsService userDetailsService;
+    private final JwtProvider jwtProvider;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtProvider jwtProvider) {
+        this.userDetailsService = userDetailsService;
+        this.jwtProvider = jwtProvider;
+    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtProvider, userDetailsService);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Define el AuthenticationManager como un Bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    public SecurityConfig(JwtProvider jwtProvider, CustomUserDetailsService userDetailsService) {
-        this.jwtProvider = jwtProvider;
-        this.userDetailsService = userDetailsService;
-    }
-
+    /*
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .authorizeHttpRequests(authorizeRequests ->
+            .authorizeRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/auth/security/login").permitAll()
-                    .anyRequest().authenticated()
-            );
+                    .requestMatchers("/auth/security/login").permitAll() // Permite el acceso a la ruta de autenticación
+                    .requestMatchers("/usuarios/**").permitAll() // Permite el acceso a los endpoints /usuarios/**
+                    .anyRequest().authenticated() // Requiere autenticación para cualquier otra solicitud
+            )
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Agrega el filtro JWT
+
+        return http.build();
+    }*/
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                // .anyRequest().permitAll()
+                                .requestMatchers("/auth/security/login").permitAll()
+                                .requestMatchers("/usuarios/**").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        String jwt = getJwtFromRequest(request);
-        if (jwt != null && jwtProvider.validateJwtToken(jwt)) {
-            String email = jwtProvider.getUserEmailFromJwtToken(jwt);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        filterChain.doFilter(request, response);
-    }
-
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
 }

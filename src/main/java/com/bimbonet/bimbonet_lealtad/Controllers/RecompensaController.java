@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/recompensas")
 public class RecompensaController {
+
     @Autowired
     private RecompensaRepository recompensaRepository;
 
@@ -17,13 +20,18 @@ public class RecompensaController {
     private RecompensaService recompensaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Recompensa> getRecompensa(@PathVariable Long id) {
-        Recompensa recompensa = recompensaRepository.getById(id);
+    public ResponseEntity<Recompensa>  getRecompensa(@PathVariable Long id) {
+        Recompensa recompensa = recompensaRepository.findById(id).orElse(null);
         return ResponseEntity.ok(recompensa);
     }
 
+    @GetMapping("/all")
+    public List<Recompensa> getAllRecompensas() {
+        return recompensaRepository.findAll();
+    }
+
     @PostMapping("/registrar")
-    public ResponseEntity<Recompensa> registrarPunto(@RequestBody Recompensa recompensa) {
+    public ResponseEntity<Recompensa> registrarRecompensa(@RequestBody Recompensa recompensa) {
         Recompensa recompensaRegistrada = recompensaService.registrarRecompensa(recompensa);
         return ResponseEntity.ok(recompensaRegistrada);
     }
