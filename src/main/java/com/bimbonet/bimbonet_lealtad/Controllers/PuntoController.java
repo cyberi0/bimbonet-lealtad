@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -40,6 +41,8 @@ public class PuntoController {
     public ResponseEntity<Punto> registrarPunto(@RequestBody Punto punto) {
         Recompensa recompensa = recompensaRepository.getById(punto.getRecompensaId().getId());
         punto.setCantidad(recompensa.getPuntos());
+        punto.setDateCreated(LocalDateTime.now());
+        punto.setActivo(true);
         Punto usuarioRegistrado = puntoService.registrarPunto(punto);
         return ResponseEntity.ok(usuarioRegistrado);
     }

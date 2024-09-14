@@ -15,6 +15,9 @@ public class Recompensa {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
+
     @Column(name = "valor", nullable = false)
     private Integer valor;
 
@@ -30,8 +33,9 @@ public class Recompensa {
         this.id = id;
     }
 
-    public Recompensa(String nombre, Integer valor, Integer puntos) {
+    public Recompensa(String nombre, String descripcion, Integer valor, Integer puntos) {
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.valor = valor;
         this.puntos = puntos;
     }
@@ -50,6 +54,14 @@ public class Recompensa {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Integer getValor() {
