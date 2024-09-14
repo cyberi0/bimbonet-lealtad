@@ -1,6 +1,6 @@
-import com.bimbonet.bimbonet_lealtad.Controllers.CanjeController;
+package com.bimbonet.bimbonet_lealtad.Controllers;
+
 import com.bimbonet.bimbonet_lealtad.Entities.*;
-import com.bimbonet.bimbonet_lealtad.Entities.Proyections.PuntoProjection;
 import com.bimbonet.bimbonet_lealtad.Generics.ErrorResponse;
 import com.bimbonet.bimbonet_lealtad.Repository.CanjeRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.PuntoRepository;
