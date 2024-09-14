@@ -480,6 +480,106 @@ Este controlador gestiona las operaciones de canje de puntos en el sistema de le
     ```
 
 ---
+# AccionController
+
+Este controlador gestiona las acciones que pueden o no tener recompensas relacionadas en el sistema.
+
+## Endpoints
+
+### 1. Registrar una nueva Acción
+
+- **POST /api/acciones/registrar**
+
+  - **Descripción:** Crea una nueva acción en el sistema.
+    - **Request Body:**
+    ```json
+    {
+      "descripcion": "Compra de 3x2",
+      "tieneRecompensa": true,
+      "accionRecompensaList":[
+        {"recompensaId":1},
+        {"recompensaId":2},
+        {"recompensaId":3}
+      ]
+    }
+    ```
+  - **Response:**
+    El objeto `Accion` de la acción registrada.
+    ```json
+    {
+    "id": 2,
+    "descripcion": "Compra de 3x2",
+    "tieneRecompensa": true,
+    "dateCreated": "2024-09-14T00:24:26.453164",
+    "accionRecompensaList": [
+        {
+            "id": 1,
+            "accionId": 2,
+            "recompensaId": 1,
+            "dateCreated": "2024-09-14T00:24:26.486838"
+        },
+        {
+            "id": 2,
+            "accionId": 2,
+            "recompensaId": 2,
+            "dateCreated": "2024-09-14T00:24:26.490474"
+        },
+        {
+            "id": 3,
+            "accionId": 2,
+            "recompensaId": 3,
+            "dateCreated": "2024-09-14T00:24:26.491701"
+        }
+      ]
+    }
+    ```
+    
+### 2. Restrear Acciones con o sin Recompensas
+
+- **POST /api/acciones/all**
+
+  - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema.
+  
+  - **Response:**
+    El objeto `Accion` con `Recompensa`.
+    ```json
+    [
+      {
+          "id": 1,
+          "descripcion": "Compra",
+          "tieneRecompensa": true,
+          "dateCreated": "2024-09-14T00:06:59.097241",
+          "accionRecompensaList": []
+      },
+      {
+        "id": 2,
+        "descripcion": "Compra de 3x2",
+        "tieneRecompensa": true,
+        "dateCreated": "2024-09-14T00:24:26.453164",
+        "accionRecompensaList": [
+            {
+                "id": 1,
+                "accionId": 2,
+                "recompensaId": 1,
+                "dateCreated": "2024-09-14T00:24:26.486838"
+            },
+            {
+                "id": 2,
+                "accionId": 2,
+                "recompensaId": 2,
+                "dateCreated": "2024-09-14T00:24:26.490474"
+            },
+            {
+                "id": 3,
+                "accionId": 2,
+                "recompensaId": 3,
+                "dateCreated": "2024-09-14T00:24:26.491701"
+            }
+        ]
+      } 
+    ]
+    ```
+---
 ## Dependencias
 
 - **Spring Boot** para la construcción del backend.
@@ -599,9 +699,10 @@ Este controlador gestiona las operaciones de canje de puntos en el sistema de le
   ...
   ...
   2024-09-13T23:20:00.266-06:00  INFO 39965 --- [bimbonet-lealtad] 
-  [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-  2024-09-13T23:20:00.271-06:00  INFO 39965 --- [bimbonet-lealtad] 
-  [main] c.b.b.BimbonetLealtadApplication : Started BimbonetLealtadApplication in 2.128 seconds (process running for 2.274)
+  [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : 
+  Tomcat started on port 8080 (http) with context path '/'
+  [main] c.b.b.BimbonetLealtadApplication : 
+  Started BimbonetLealtadApplication in 2.128 seconds (process running for 2.274)
 
   ```
   - Si requieres ejecutar el Proyecto en modo Debbug, ejecuta el siguiente comando:
