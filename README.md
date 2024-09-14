@@ -555,3 +555,103 @@ Este controlador gestiona las operaciones de canje de puntos en el sistema de le
     \i /ruta_proyecto/src/main/resources/schema/bimbonet_lealtad.sql
     ```
 ---
+
+## Ejecutar Proyecto Spring Boot
+
+1. **Acceder a ruta del proyecto mediante la Terminal:**
+  - Ejecuta el siguiente comando para Instalar las Dependencias:
+    ```sh
+    mvn clean install
+    ```
+    Resultado del Comando
+    ```
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  3.074 s
+    [INFO] Finished at: 2024-09-13T23:19:09-06:00
+    [INFO] ------------------------------------------------------------------------
+    ```
+
+2. **Ejecutar Proyecto**
+- Una vez dentro de la consola, ejecuta el siguiente comando ejecutar el Proyecto:
+  ```sh
+  mvn spring-boot:run 
+  ```
+  Resultado del comando
+  ```
+  [INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+  =========|_|==============|___/=/_/_/_/
+
+  :: Spring Boot ::                (v3.3.3)
+
+  2024-09-13T23:19:58.294-06:00  INFO 39965 --- [bimbonet-lealtad] 
+  2024-09-13T23:19:58.295-06:00  INFO 39965 --- [bimbonet-lealtad]
+  2024-09-13T23:19:58.506-06:00  INFO 39965 --- [bimbonet-lealtad] 
+  [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+  ...
+  ...
+  ...
+  2024-09-13T23:20:00.266-06:00  INFO 39965 --- [bimbonet-lealtad] 
+  [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+  2024-09-13T23:20:00.271-06:00  INFO 39965 --- [bimbonet-lealtad] 
+  [main] c.b.b.BimbonetLealtadApplication : Started BimbonetLealtadApplication in 2.128 seconds (process running for 2.274)
+
+  ```
+  - Si requieres ejecutar el Proyecto en modo Debbug, ejecuta el siguiente comando:
+  ```sh
+    mvn spring-boot:run -X
+  ```
+    
+3. **Ejecutar Pruebas Unitarias**
+    ```sh
+    mvn test
+    ``` 
+    Resultado de las Pruebas Unitarias
+    ```
+    [INFO] 
+    [INFO] --- surefire:3.2.5:test (default-test) @ bimbonet-lealtad ---
+    [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+    [INFO]
+    [INFO] -------------------------------------------------------
+    [INFO]  T E S T S
+    [INFO] -------------------------------------------------------
+    [INFO] Running CanjeControllerTest
+    Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+    23:25:41.037 [main] INFO com.bimbonet.bimbonet_lealtad.Controllers.CanjeController -- valorRecompensa - 100
+    23:25:41.039 [main] INFO com.bimbonet.bimbonet_lealtad.Controllers.CanjeController -- valorAcumuladoRecompensa - 150
+    [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.700 s -- in CanjeControllerTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Controllers.UsuarioControllerTest
+    [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.069 s -- in com.bimbonet.bimbonet_lealtad.Controllers.UsuarioControllerTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Controllers.RecompensaControllerTest
+    [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.bimbonet.bimbonet_lealtad.Controllers.RecompensaControllerTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Controllers.PuntoControllerTest
+    [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.bimbonet.bimbonet_lealtad.Controllers.PuntoControllerTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Services.CanjeServiceTest
+    [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.bimbonet.bimbonet_lealtad.Services.CanjeServiceTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Services.UsuarioServiceTest
+    [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.bimbonet.bimbonet_lealtad.Services.UsuarioServiceTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Services.PuntoServiceTest
+    [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.bimbonet.bimbonet_lealtad.Services.PuntoServiceTest
+    [INFO] Running com.bimbonet.bimbonet_lealtad.Services.RecompensaServiceTest
+    [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.bimbonet.bimbonet_lealtad.Services.RecompensaServiceTest
+    [INFO]
+    [INFO] Results:
+    [INFO]
+    [INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+    [INFO]
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  2.425 s
+    [INFO] Finished at: 2024-09-13T23:25:41-06:00
+    [INFO] ------------------------------------------------------------------------
+
+    ``` 
+---

@@ -27,11 +27,13 @@ public class PuntoController {
     @Autowired
     private RecompensaRepository recompensaRepository;
 
+    @Autowired
+    private PuntoRepository puntoRepository;
+
     @GetMapping("/{id}")
     public Punto getPunto(@PathVariable Long id) {
-        Recompensa recompensa = new Recompensa();
-        Usuario usuario = new Usuario();
-        return new Punto(recompensa, usuario.getId(), 100);
+        Punto punto = puntoRepository.findById(id).orElse(null);
+        return punto;
     }
 
     @PostMapping("/registrar")

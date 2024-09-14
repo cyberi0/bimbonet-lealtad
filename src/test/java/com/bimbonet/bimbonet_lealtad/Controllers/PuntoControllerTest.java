@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -48,13 +49,20 @@ class PuntoControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
+
+
     @Test
     void testGetPunto() {
         // Preparar
         Recompensa recompensa = new Recompensa();
         Usuario usuario = new Usuario();
         usuario.setId(1L);
-        Punto punto = new Punto(recompensa, usuario.getId(), 100);
+
+        Punto punto = new Punto();
+        punto.setCantidad(100);
+
+        // Configurar mock
+        when(puntoRepository.findById(1L)).thenReturn(Optional.of(punto));
 
         // Actuar
         Punto result = puntoController.getPunto(1L);
@@ -119,3 +127,6 @@ class PuntoControllerTest {
 
 
 }
+
+
+

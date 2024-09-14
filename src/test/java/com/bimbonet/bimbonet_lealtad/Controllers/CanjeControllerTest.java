@@ -1,14 +1,10 @@
-package com.bimbonet.bimbonet_lealtad.Controllers;
-
+import com.bimbonet.bimbonet_lealtad.Controllers.CanjeController;
 import com.bimbonet.bimbonet_lealtad.Entities.*;
-import com.bimbonet.bimbonet_lealtad.Entities.DTOs.PuntoDTO;
 import com.bimbonet.bimbonet_lealtad.Entities.Proyections.PuntoProjection;
-import com.bimbonet.bimbonet_lealtad.Projections.PuntoProjectionImpl;
+import com.bimbonet.bimbonet_lealtad.Generics.ErrorResponse;
 import com.bimbonet.bimbonet_lealtad.Repository.CanjeRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.PuntoRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.RecompensaRepository;
-import com.bimbonet.bimbonet_lealtad.Services.CanjeService;
-import com.bimbonet.bimbonet_lealtad.Generics.ErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,28 +35,9 @@ class CanjeControllerTest {
     @Mock
     private PuntoRepository puntoRepository;
 
-    @Mock
-    private CanjeService canjeService;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void testGetPunto() {
-        // Preparar
-        Recompensa recompensa = new Recompensa();
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        Punto punto = new Punto(recompensa, usuario.getId(), 100);
-
-        // Actuar
-        Punto result = canjeController.getPunto(1L);
-
-        // Afirmar
-        assertNotNull(result);
-        assertEquals(result, result);
     }
 
     @Test
@@ -96,10 +73,9 @@ class CanjeControllerTest {
         Recompensa recompensa = new Recompensa();
         recompensa.setId(1L);
         recompensa.setValor(100);
-        PuntoProjection puntoProjection = new PuntoProjectionImpl(1L, "Recompensa 1", 50L);
-        PuntoProjection puntoList = (PuntoProjection) Collections.singletonList(puntoProjection);
+
         when(recompensaRepository.getReferenceById(anyLong())).thenReturn(recompensa);
-        when(puntoRepository.sumarPuntosPorRecompensaId(anyLong(), anyLong())).thenReturn((List<Object[]>) puntoList);
+        when(puntoRepository.sumarPuntosPorRecompensaId(anyLong(), anyLong())).thenReturn(Collections.emptyList());
 
         // Actuar
         ResponseEntity<?> response = canjeController.canjearPuntos(usuarioRecompensa);
@@ -108,6 +84,6 @@ class CanjeControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(response.getBody() instanceof ErrorResponse);
         ErrorResponse errorResponse = (ErrorResponse) response.getBody();
-        assertTrue(errorResponse.getMessage().contains("Lo sentimos... Te faltan"));
+        assertEquals("No se encontraron puntos acumulados para la recompensa.", errorResponse.getMessage());
     }
 }
