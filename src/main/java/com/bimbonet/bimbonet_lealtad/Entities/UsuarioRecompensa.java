@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuario_recompensas")
+@Table(name = "usuarios_recompensas")
 public class UsuarioRecompensa {
 
     @Id
@@ -28,6 +28,11 @@ public class UsuarioRecompensa {
 
     public UsuarioRecompensa(Long id) {
         this.id = id;
+    }
+
+    public UsuarioRecompensa(Long usuarioId, Long recompensaId) {
+        this.recompensaId = recompensaId;
+        this.usuarioId = usuarioId;
     }
 
     public UsuarioRecompensa(Long recompensaId, Long usuarioId, Integer valor, LocalDateTime dateCreated) {

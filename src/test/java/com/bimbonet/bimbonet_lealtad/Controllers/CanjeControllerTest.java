@@ -1,6 +1,9 @@
 package com.bimbonet.bimbonet_lealtad.Controllers;
 
 import com.bimbonet.bimbonet_lealtad.Entities.*;
+import com.bimbonet.bimbonet_lealtad.Entities.DTOs.PuntoDTO;
+import com.bimbonet.bimbonet_lealtad.Entities.Proyections.PuntoProjection;
+import com.bimbonet.bimbonet_lealtad.Projections.PuntoProjectionImpl;
 import com.bimbonet.bimbonet_lealtad.Repository.CanjeRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.PuntoRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.RecompensaRepository;
@@ -81,7 +84,7 @@ class CanjeControllerTest {
         // Afirmar
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(usuarioRecompensa, response.getBody());
-        verify(puntoRepository, times(1)).deleteByRecompensaId(anyLong());
+        verify(puntoRepository, times(1)).updateCampoByRecompensaId(anyLong(), anyLong());
     }
 
     @Test
@@ -93,10 +96,10 @@ class CanjeControllerTest {
         Recompensa recompensa = new Recompensa();
         recompensa.setId(1L);
         recompensa.setValor(100);
-        List<Object[]> puntoList = Collections.singletonList(new Object[]{1L, 1L, 50L});
-
+        PuntoProjection puntoProjection = new PuntoProjectionImpl(1L, "Recompensa 1", 50L);
+        PuntoProjection puntoList = (PuntoProjection) Collections.singletonList(puntoProjection);
         when(recompensaRepository.getReferenceById(anyLong())).thenReturn(recompensa);
-        when(puntoRepository.sumarPuntosPorRecompensaId(anyLong(), anyLong())).thenReturn(puntoList);
+        when(puntoRepository.sumarPuntosPorRecompensaId(anyLong(), anyLong())).thenReturn((List<Object[]>) puntoList);
 
         // Actuar
         ResponseEntity<?> response = canjeController.canjearPuntos(usuarioRecompensa);
@@ -105,6 +108,6 @@ class CanjeControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(response.getBody() instanceof ErrorResponse);
         ErrorResponse errorResponse = (ErrorResponse) response.getBody();
-        assertFalse(errorResponse.getMessage().contains("puntos faltantes"));
+        assertTrue(errorResponse.getMessage().contains("Lo sentimos... Te faltan"));
     }
 }

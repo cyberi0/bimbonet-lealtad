@@ -25,6 +25,9 @@ public class Punto {
     @Column(name = "date_created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dateCreated;
 
+    @Column(name = "activo")
+    private boolean activo;
+
     // Constructor vacío
     public Punto() {}
 
@@ -36,6 +39,14 @@ public class Punto {
         this.recompensaId = recompensaId;
         this.usuarioId = usuarioId;
         this.cantidad = cantidad;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Recompensa getRecompensaId() {
@@ -68,5 +79,13 @@ public class Punto {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

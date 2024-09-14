@@ -1,5 +1,7 @@
 package com.bimbonet.bimbonet_lealtad.Services;
 
+import com.bimbonet.bimbonet_lealtad.Entities.DTOs.PuntoDTO;
+import com.bimbonet.bimbonet_lealtad.Entities.Proyections.PuntoProjection;
 import com.bimbonet.bimbonet_lealtad.Entities.Punto;
 import com.bimbonet.bimbonet_lealtad.Repository.PuntoRepository;
 import org.junit.jupiter.api.BeforeEach;

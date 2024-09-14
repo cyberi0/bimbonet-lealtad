@@ -1,8 +1,11 @@
 package com.bimbonet.bimbonet_lealtad.Controllers;
 
+import com.bimbonet.bimbonet_lealtad.Entities.DTOs.PuntoDTO;
+import com.bimbonet.bimbonet_lealtad.Entities.Proyections.PuntoProjection;
 import com.bimbonet.bimbonet_lealtad.Entities.Punto;
 import com.bimbonet.bimbonet_lealtad.Entities.Recompensa;
 import com.bimbonet.bimbonet_lealtad.Entities.Usuario;
+import com.bimbonet.bimbonet_lealtad.Projections.PuntoProjectionImpl;
 import com.bimbonet.bimbonet_lealtad.Repository.PuntoRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.RecompensaRepository;
 import com.bimbonet.bimbonet_lealtad.Services.PuntoService;
@@ -113,4 +116,6 @@ class PuntoControllerTest {
         assertEquals(1, result.size());
         assertEquals(50L, result.get(0)[1]);
     }
+
+
 }

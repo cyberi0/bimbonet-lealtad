@@ -39,31 +39,15 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /*
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeRequests(authorizeRequests ->
-                authorizeRequests
-                    .requestMatchers("/auth/security/login").permitAll() // Permite el acceso a la ruta de autenticación
-                    .requestMatchers("/usuarios/**").permitAll() // Permite el acceso a los endpoints /usuarios/**
-                    .anyRequest().authenticated() // Requiere autenticación para cualquier otra solicitud
-            )
-            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Agrega el filtro JWT
-
-        return http.build();
-    }*/
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                // .anyRequest().permitAll()
                                 .requestMatchers("/auth/security/login").permitAll()
-                                .requestMatchers("/usuarios/**").permitAll()
+                                .requestMatchers("/api/usuarios/**").permitAll()
+                                //.anyRequest().permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
