@@ -33,7 +33,7 @@ public class AccionController {
     }
 
     @GetMapping("/all")
-    public List<Accion> getAllAccions() {
+    public List<Accion> getAll() {
         List<Accion> acciones = accionRepository.findAll();
 
         for (Accion accion : acciones) {
@@ -42,6 +42,17 @@ public class AccionController {
         }
 
         return acciones;
+    }
+
+    @GetMapping("/tiene-recompensa/{tieneRecompensa}")
+    public List<Accion> findByTieneRecompensa(@PathVariable Boolean tieneRecompensa) {
+        List<Accion> accionTieneRecompensList = accionRepository.findByTieneRecompensa(tieneRecompensa);
+        for (Accion accion : accionTieneRecompensList) {
+            List<AccionRecompensa> accionRecompensas = accionRecompensaRepository.findByAccionId(accion.getId());
+            accion.setAccionRecompensaList(accionRecompensas);
+        }
+
+        return accionTieneRecompensList;
     }
 
 

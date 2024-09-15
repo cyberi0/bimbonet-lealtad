@@ -536,7 +536,7 @@ Este controlador gestiona las acciones que pueden o no tener recompensas relacio
     
 ### 2. Restrear Acciones con o sin Recompensas
 
-- **POST /api/acciones/all**
+- **GET /api/acciones/all/**
 
   - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema.
   
@@ -579,6 +579,50 @@ Este controlador gestiona las acciones que pueden o no tener recompensas relacio
       } 
     ]
     ```
+  
+  - **GET /api/acciones/tiene-recompensa/{tieneRecompensa}'**
+
+    - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema. donde {tieneRecompensa} es un valor que recibe de tipo Boolean (true/false)
+  
+    - **Response:**
+      El objeto `Accion` con `Recompensa`.
+      ```json
+      [
+        {
+            "id": 1,
+            "descripcion": "Compra",
+            "tieneRecompensa": true,
+            "dateCreated": "2024-09-14T00:06:59.097241",
+            "accionRecompensaList": []
+        },
+        {
+          "id": 2,
+          "descripcion": "Compra de 3x2",
+          "tieneRecompensa": true,
+          "dateCreated": "2024-09-14T00:24:26.453164",
+          "accionRecompensaList": [
+              {
+                  "id": 1,
+                  "accionId": 2,
+                  "recompensaId": 1,
+                  "dateCreated": "2024-09-14T00:24:26.486838"
+              },
+              {
+                  "id": 2,
+                  "accionId": 2,
+                  "recompensaId": 2,
+                  "dateCreated": "2024-09-14T00:24:26.490474"
+              },
+              {
+                  "id": 3,
+                  "accionId": 2,
+                  "recompensaId": 3,
+                  "dateCreated": "2024-09-14T00:24:26.491701"
+              }
+          ]
+        } 
+      ]
+      ```
 ---
 ## Dependencias
 
