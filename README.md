@@ -580,9 +580,9 @@ Este controlador gestiona las acciones que pueden o no tener recompensas relacio
     ]
     ```
   
-    - **GET /api/acciones/tiene-recompensa/{tieneRecompensa}'**
+- **GET /api/acciones/tiene-recompensa/{tieneRecompensa}'**
 
-      - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema. donde {tieneRecompensa} es un valor que recibe de tipo Boolean (true/false)
+  - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema. donde {tieneRecompensa} es un valor que recibe de tipo Boolean (true/false)
   
   - **Response:**
     El objeto `Accion` con `Recompensa`.
