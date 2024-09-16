@@ -15,8 +15,9 @@ public class AccionRecompensa {
     @Column(name = "accion_id", nullable = false)
     private Long accionId;
 
-    @Column(name = "recompensa_id", nullable = false)
-    private Long recompensaId;
+    @ManyToOne
+    @JoinColumn(name = "recompensa_id")
+    private Recompensa recompensaId;
 
     @Column(name = "date_created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dateCreated;
@@ -27,7 +28,7 @@ public class AccionRecompensa {
         this.id = id;
     }
 
-    public AccionRecompensa(Long accionId, Long recompensaId, LocalDateTime dateCreated) {
+    public AccionRecompensa(Long accionId, Recompensa recompensaId, LocalDateTime dateCreated) {
         this.accionId = accionId;
         this.recompensaId = recompensaId;
         this.dateCreated = dateCreated;
@@ -49,11 +50,11 @@ public class AccionRecompensa {
         this.accionId = accionId;
     }
 
-    public Long getRecompensaId() {
+    public Recompensa getRecompensaId() {
         return recompensaId;
     }
 
-    public void setRecompensaId(Long recompensaId) {
+    public void setRecompensaId(Recompensa recompensaId) {
         this.recompensaId = recompensaId;
     }
 

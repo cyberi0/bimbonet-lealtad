@@ -4,6 +4,7 @@ import com.bimbonet.bimbonet_lealtad.Entities.Accion;
 import com.bimbonet.bimbonet_lealtad.Entities.AccionRecompensa;
 import com.bimbonet.bimbonet_lealtad.Repository.AccionRecompensaRepository;
 import com.bimbonet.bimbonet_lealtad.Repository.AccionRepository;
+import com.bimbonet.bimbonet_lealtad.Repository.RecompensaRepository;
 import com.bimbonet.bimbonet_lealtad.Services.AccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class AccionController {
 
     @Autowired
     private AccionService accionService;
+    @Autowired
+    private RecompensaRepository recompensaRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Accion>  getAccion(@PathVariable Long id) {
@@ -47,9 +50,10 @@ public class AccionController {
     @GetMapping("/tiene-recompensa/{tieneRecompensa}")
     public List<Accion> findByTieneRecompensa(@PathVariable Boolean tieneRecompensa) {
         List<Accion> accionTieneRecompensList = accionRepository.findByTieneRecompensa(tieneRecompensa);
+
         for (Accion accion : accionTieneRecompensList) {
-            List<AccionRecompensa> accionRecompensas = accionRecompensaRepository.findByAccionId(accion.getId());
-            accion.setAccionRecompensaList(accionRecompensas);
+           List<AccionRecompensa> accionRecompensaList = accionRecompensaRepository.findByAccionId(accion.getId());
+           accion.setAccionRecompensaList(accionRecompensaList);
         }
 
         return accionTieneRecompensList;

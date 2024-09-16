@@ -580,49 +580,63 @@ Este controlador gestiona las acciones que pueden o no tener recompensas relacio
     ]
     ```
   
-  - **GET /api/acciones/tiene-recompensa/{tieneRecompensa}'**
+    - **GET /api/acciones/tiene-recompensa/{tieneRecompensa}'**
 
-    - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema. donde {tieneRecompensa} es un valor que recibe de tipo Boolean (true/false)
+      - **Descripción:** Rastrea acciones con o sin Recompensas en el sistema. donde {tieneRecompensa} es un valor que recibe de tipo Boolean (true/false)
   
-    - **Response:**
-      El objeto `Accion` con `Recompensa`.
-      ```json
-      [
+  - **Response:**
+    El objeto `Accion` con `Recompensa`.
+    ```json
+    [
         {
             "id": 1,
             "descripcion": "Compra",
             "tieneRecompensa": true,
             "dateCreated": "2024-09-14T00:06:59.097241",
-            "accionRecompensaList": []
-        },
-        {
-          "id": 2,
-          "descripcion": "Compra de 3x2",
-          "tieneRecompensa": true,
-          "dateCreated": "2024-09-14T00:24:26.453164",
-          "accionRecompensaList": [
-              {
-                  "id": 1,
-                  "accionId": 2,
-                  "recompensaId": 1,
-                  "dateCreated": "2024-09-14T00:24:26.486838"
+            "accionRecompensaList": [
+             {
+                 "id": 1,
+                 "accionId": 1,
+                 "recompensaId": {
+                     "id": 1,
+                     "nombre": "fox jumps over the lazy dogThe",
+                     "descripcion": "the lazy dogThe quic",
+                     "valor": 778398,
+                     "puntos": null,
+                     "dateCreated": "1980-09-30T08:02:06.46"
+                  },
+                 "dateCreated": "2024-09-14T00:24:26.486838"
+             },
+             {
+              "id": 2,
+              "accionId": 1,
+              "recompensaId": {
+                "id": 2,
+                "nombre": "dogThe quick brown fox jumps o",
+                "descripcion": "dogThe quick brown fox jumps over",
+                "valor": 977121,
+                "puntos": null,
+                "dateCreated": "2010-02-13T23:54:59.413"
               },
-              {
-                  "id": 2,
-                  "accionId": 2,
-                  "recompensaId": 2,
-                  "dateCreated": "2024-09-14T00:24:26.490474"
+              "dateCreated": "2024-09-14T00:24:26.490474"
+            },
+            {
+              "id": 3,
+              "accionId": 1,
+              "recompensaId": {
+                "id": 3,
+                "nombre": "over the lazy do",
+                "descripcion": "the lazy d",
+                "valor": 810232,
+                "puntos": 10,
+                "dateCreated": "2006-05-16T22:19:04.625"
               },
-              {
-                  "id": 3,
-                  "accionId": 2,
-                  "recompensaId": 3,
-                  "dateCreated": "2024-09-14T00:24:26.491701"
-              }
+              "dateCreated": "2024-09-14T00:24:26.491701"
+            }
           ]
-        } 
-      ]
-      ```
+        }
+    ]
+    ```
 ---
 ## Dependencias
 
